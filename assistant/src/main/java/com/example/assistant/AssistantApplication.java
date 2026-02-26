@@ -108,11 +108,13 @@ class AssistantController {
 		var qaAdvisor = QuestionAnswerAdvisor.builder(vectorStore).build();
 		this.chatClient = builder
             .defaultSystem("""
-                You are an FMCG Commercial Agent. 
+                You are an Sales and Marketing Agent. 
 				You have access to the commercial database and can answer questions.
+				First use the tools at your disposal to find the relevant information, if not then refer to the advisors.
+				If there is no information, then return a polite response indicating that you don't have the information, and avoid making up an answer.
                 """)
-			.defaultAdvisors(qaAdvisor)
-			//.defaultTools(customerTools)
+			.defaultTools(customerTools)
+			//.defaultAdvisors(qaAdvisor)
             .build();
 	}
 
@@ -143,13 +145,13 @@ class CustomerTools {
 		this.repository = repository;
 	}
 
-	@Tool(description = "List customers, optionally filtered by type")
+	@Tool(description = "List customers, optionally filtered by type. Leave type blank to list all customers.")
 	List<Customer> listCustomers(String type) {
 		if (type == null || type.isBlank()) {
 			return repository.findAll();
 		}
 		return repository.findByType(type);
-	}
+	}	
 
 	@Tool(description = "List customer types")
 	List<String> listCustomerTypes() {
