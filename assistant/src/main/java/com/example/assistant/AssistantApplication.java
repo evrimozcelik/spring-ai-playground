@@ -113,8 +113,8 @@ class AssistantController {
 				First use the tools at your disposal to find the relevant information, if not then refer to the advisors.
 				If there is no information, then return a polite response indicating that you don't have the information, and avoid making up an answer.
                 """)
-			.defaultTools(customerTools)
-			//.defaultAdvisors(qaAdvisor)
+			//.defaultTools(customerTools)
+			.defaultAdvisors(qaAdvisor)
             .build();
 	}
 
